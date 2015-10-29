@@ -37,12 +37,12 @@ class LPReduction<D, R> {
 	def variables
 
 	/**
-	 * Provides an algorithm for P, by reducing P to LP
+	 * Maps an instance x of P into an LP instance y
 	 * 
 	 * @param x the domain object
 	 * @return the reduced LP instance y
 	 */
-	LPInstance reduce(D x) {
+	LPInstance mapToLP(D x) {
 		variables = vars(x)
 		new LPInstance(variables,
 				objFunc ? objFunc(x) : new LPFunction([:], 0),
@@ -71,8 +71,8 @@ class LPReduction<D, R> {
 	 * @param x the domain object
 	 * @return P(x)
 	 */
-	R reduceAndSolve(D x) {
-		LPInstance y = reduce(x)
+	R reduce(D x) {
+		LPInstance y = mapToLP(x)
 		Solution solution = solve(y)
 		result(solution)
 	}
